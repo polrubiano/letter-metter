@@ -52,19 +52,27 @@ def calculate_distance(text, keyboard, scale=1.0):
 
 
 def format_distance(distance_mm):
-    if abs(distance_mm) > 1000:
-        return f"{distance_mm / 1000:.2f} m"
+    abs_dist = abs(distance_mm)
+    if abs_dist >= 1_000_000:
+        return f"{distance_mm / 1_000_000:.3f} km"
+    elif abs_dist >= 1_000:
+        return f"{distance_mm / 1_000:.2f} m"
     else:
         return f"{distance_mm:.2f} mm"
 
 
 def format_time(seconds):
-    if seconds < 60:
-        return f"{seconds:.1f} s"
-    else:
+    abs_secs = abs(seconds)
+    if abs_secs >= 3600:
+        hours = int(seconds // 3600)
+        minutes = int((seconds % 3600) // 60)
+        return f"{hours} h {minutes} min"
+    elif abs_secs >= 60:
         minutes = int(seconds // 60)
         secs = seconds % 60
         return f"{minutes} min {secs:.1f} s"
+    else:
+        return f"{seconds:.2f} s"
 
 
 def process_file(path, current_kpm, scale_eye=1.0, scale_qwerty=1.0):
@@ -140,4 +148,4 @@ user_current_kpm = 15
 eye_sense_scale = 1
 qwerty_scale = 1
 
-process_file("text.txt", user_current_kpm, scale_eye=eye_sense_scale, scale_qwerty=qwerty_scale)
+process_file("El ingenioso hidalgo Don Quijot - Miguel Cervantes.txt", user_current_kpm, scale_eye=eye_sense_scale, scale_qwerty=qwerty_scale)
