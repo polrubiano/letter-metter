@@ -85,7 +85,6 @@ def process_file(path, current_kpm, scale_eye=1.0, scale_qwerty=1.0):
 
     processed_text = clean_text(original_text)
 
-    # CORREGIDO: Hemos vuelto a añadir los parámetros 'scale' que faltaban
     dist_eye, valid_keystrokes = calculate_distance(processed_text, eye_sense_coords, scale=scale_eye)
     dist_qwerty, _ = calculate_distance(processed_text, qwerty_coords, scale=scale_qwerty)
     saved_dist = dist_qwerty - dist_eye
@@ -123,7 +122,6 @@ def process_file(path, current_kpm, scale_eye=1.0, scale_qwerty=1.0):
         percent_dist = (saved_dist / dist_qwerty) * 100
         print(f"Saved distance: {format_distance(saved_dist)} ({percent_dist:.1f}% less movement)\n")
 
-        # AÑADIDO: Formato simétrico para la línea de QWERTY
         print(f"️Time on QWERTY:      {format_time(time_qwerty_s):<15} -> "
               f"Baseline of {current_kpm:.1f} KPM ({sec_per_keystroke_qwerty:.1f} sec/keystroke)")
         print(f"Time on Eye Sense:   {format_time(time_eye_s):<15} -> "
