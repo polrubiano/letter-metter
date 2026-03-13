@@ -146,4 +146,4 @@ user_current_kpm = 15
 eye_sense_scale = 1
 qwerty_scale = 1
 
-process_file("El ingenioso hidalgo Don Quijot - Miguel Cervantes.txt", user_current_kpm, scale_eye=eye_sense_scale, scale_qwerty=qwerty_scale)
+process_file("principito, El - Antoine de Saint-Exupéry.txt", user_current_kpm, scale_eye=eye_sense_scale, scale_qwerty=qwerty_scale)
