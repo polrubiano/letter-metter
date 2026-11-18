@@ -1,5 +1,6 @@
 # Letter Metter — Eye Sense vs. QWERTY
 
+[![CI](https://github.com/polrubiano/letter-metter/actions/workflows/ci.yml/badge.svg)](https://github.com/polrubiano/letter-metter/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
