@@ -52,9 +52,11 @@ EYE_SENSE_KEYBOARD = Layout(
     },
 )  # fmt: skip
 
-# Hexagonal Eye Sense layout. The hexagons nest into each other, so key centres
-# are 9.8 mm apart horizontally and 8.5 mm vertically even though every key keeps
-# a 10 x 10 mm bounding box.
+# Original hexagonal Eye Sense layout, kept to reproduce earlier results. Its key
+# centres are 9.8 mm apart horizontally and 8.5 mm vertically because the 10 mm box
+# was fitted to the hexagon's sharp vertices instead of its rounded edge, so the keys
+# are slightly narrower than 10 mm (see the erratum in the README). EYE_SENSE_KEYBOARD
+# uses the corrected geometry.
 EYE_SENSE = Layout(
     name="Eye Sense",
     keys={
@@ -87,4 +89,4 @@ LAYOUTS: Mapping[str, Layout] = MappingProxyType(
         "eye-sense-keyboard": EYE_SENSE_KEYBOARD,
     }
 )
-DEFAULT_LAYOUT = "eye-sense"
+DEFAULT_LAYOUT = "eye-sense-keyboard"

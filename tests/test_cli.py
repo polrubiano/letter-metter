@@ -18,7 +18,7 @@ def test_prints_full_report(text_file, capsys):
     for expected in (
         "Valid keystrokes: 48",
         "Distance QWERTY:",
-        "Distance Eye Sense:",
+        "Distance Eye Sense Keyboard:",
         "Saved distance:",
         "Baseline of 15.0 KPM",
         "Extrapolated to",
