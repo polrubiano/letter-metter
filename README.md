@@ -72,6 +72,9 @@ reproduce earlier results.
 > the original layout, the arrangement will be iterated on to improve these results. Expect the
 > figures above to change.
 
+- [Eye Sense Keyboard](https://github.com/polrubiano/eyesense-keyboard): design work behind the new Eye Sense Keyboard layout, 
+  the default layout in Letter Metter.
+  
 ## Quick start
 
 Requires Python 3.10+. No runtime dependencies.
@@ -233,6 +236,8 @@ ruff format .    # format
 ## Related
 
 - [Eye Sense](https://github.com/polrubiano/eyesense): project overview and my contribution (keyboard design and development). The app's source code is currently private.
+- [Eye Sense Keyboard](https://github.com/polrubiano/eyesense-keyboard): design work behind the new Eye Sense Keyboard layout, 
+  the default layout in Letter Metter.   
 
 ## License
 
