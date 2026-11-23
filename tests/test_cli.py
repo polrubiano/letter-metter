@@ -28,6 +28,20 @@ def test_prints_full_report(text_file, capsys):
     assert out.isascii(), "report must be printable on any console encoding"
 
 
+@pytest.mark.parametrize(
+    ("layout", "name"), [("eye-sense", "Eye Sense"), ("eye-sense-keyboard", "Eye Sense Keyboard")]
+)
+def test_layout_option_selects_compared_layout(text_file, capsys, layout, name):
+    assert main([str(text_file), "--layout", layout]) == 0
+    assert f"Distance {name}:" in capsys.readouterr().out
+
+
+def test_unknown_layout_is_rejected(text_file, capsys):
+    with pytest.raises(SystemExit):
+        main([str(text_file), "--layout", "dvorak"])
+    assert "invalid choice" in capsys.readouterr().err
+
+
 def test_accepts_utf8_bom(tmp_path, capsys):
     path = tmp_path / "bom.txt"
     path.write_bytes("﻿hola".encode())

@@ -10,6 +10,7 @@ from typing import TextIO
 
 from letter_metter import __version__
 from letter_metter.formatting import format_distance, format_time
+from letter_metter.layouts import DEFAULT_LAYOUT, LAYOUTS
 from letter_metter.metrics import ComparisonResult, compare
 
 SEPARATOR = "-" * 45
@@ -18,7 +19,7 @@ SEPARATOR = "-" * 45
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="letter-metter",
-        description="Compare the eye travel needed to type a text on QWERTY and on Eye Sense.",
+        description="Compare the eye travel needed to type a text on QWERTY and on another layout.",
     )
     parser.add_argument("text_file", type=Path, help="UTF-8 text file to analyse")
     parser.add_argument(
@@ -28,10 +29,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="user's current keystrokes per minute on QWERTY (default: 15, i.e. 4 s per key)",
     )
     parser.add_argument(
+        "--layout",
+        choices=sorted(LAYOUTS),
+        default=DEFAULT_LAYOUT,
+        help=f"layout to compare against QWERTY (default: {DEFAULT_LAYOUT})",
+    )
+    parser.add_argument(
         "--eye-scale",
         type=float,
         default=1.0,
-        help="size multiplier of the Eye Sense prototype (default: 1.0 = 10 mm keys)",
+        help="size multiplier of the compared layout (default: 1.0 = 10 mm keys)",
     )
     parser.add_argument(
         "--qwerty-scale",
@@ -109,6 +116,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = compare(
             text,
             kpm=args.kpm,
+            eye_layout=LAYOUTS[args.layout],
             eye_scale=args.eye_scale,
             baseline_scale=args.qwerty_scale,
         )

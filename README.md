@@ -73,7 +73,8 @@ Create a **Run/Debug configuration** of type *Python*:
 | --- | --- | --- |
 | `TEXT_FILE` | — | UTF-8 text to analyse |
 | `--kpm` | `15` | User's current **keystrokes per minute** on QWERTY (15 KPM = 4 s per key) |
-| `--eye-scale` | `1.0` | Size multiplier of the Eye Sense prototype (`1.5` = keys 50 % larger) |
+| `--layout` | `eye-sense` | Layout to compare against QWERTY: `eye-sense` or `eye-sense-keyboard` |
+| `--eye-scale` | `1.0` | Size multiplier of the compared layout (`1.5` = keys 50 % larger) |
 | `--qwerty-scale` | `1.0` | Size multiplier of the QWERTY keyboard |
 
 It can also be used as a library:
@@ -141,6 +142,9 @@ from letter_metter import Layout
 
 MY_LAYOUT = Layout("My layout", {"a": (5, 5), "b": (15, 5), ...})
 ```
+
+To make it selectable with `--layout`, register it in `LAYOUTS` (in `layouts.py`) under a
+command-line name, e.g. `"my-layout": MY_LAYOUT`.
 
 Both layouts in a comparison must contain the same letters.
 
