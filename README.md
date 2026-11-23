@@ -17,17 +17,17 @@ how much time they would save.
 $ letter-metter texts/don_quijote.txt --kpm 15
 File processed: texts/don_quijote.txt
 Valid keystrokes: 776819
-Scale applied -> Eye Sense: 1x | QWERTY: 1x
+Scale applied -> Eye Sense Keyboard: 1x | QWERTY: 1x
 
 ---------------------------------------------
-Distance QWERTY:    28.415 km
-Distance Eye Sense: 13.320 km
+Distance QWERTY:             28.415 km
+Distance Eye Sense Keyboard: 14.337 km
 ---------------------------------------------
-Saved distance: 15.094 km (53.1% less movement)
+Saved distance: 14.078 km (49.5% less movement)
 
-Time on QWERTY:    863 h 7 min     -> Baseline of 15.0 KPM (4.0 sec/keystroke)
-Time on Eye Sense: 404 h 37 min    -> Extrapolated to 32.0 KPM (1.9 sec/keystroke)
-Total time saved:  458 h 30 min
+Time on QWERTY:             863 h 7 min     -> Baseline of 15.0 KPM (4.0 sec/keystroke)
+Time on Eye Sense Keyboard: 435 h 30 min    -> Extrapolated to 29.7 KPM (2.0 sec/keystroke)
+Total time saved:           427 h 37 min
 ```
 
 ## Why
@@ -36,12 +36,41 @@ For a user who types by looking at each key, every millimetre between two letter
 fatigue. Eye Sense reduces that distance in two ways:
 
 1. **Hexagonal tiling.** Every key keeps a 10 × 10 mm footprint, the same as a QWERTY key, but
-   hexagons nest into each other. The centres of neighbouring keys end up 9.8 mm apart horizontally
-   and 8.5 mm vertically, so the whole keyboard is more compact without making any key smaller.
+   hexagons nest into each other. The centres of neighbouring keys end up 10 mm apart horizontally
+   and 8.66 mm vertically, so the whole keyboard is more compact without making any key smaller.
 2. **Letter arrangement.** The most frequent Spanish letters (`e a o s r n l d ...`) are grouped
    in the middle of the keyboard, so the eyes rarely have to travel to the edges.
 
 Letter Metter turns those design decisions into a number you can check.
+
+## Erratum: key width in the original Eye Sense layout
+
+The original Eye Sense layout (`--layout eye-sense`) carried over a measuring error from the design
+tool. The hexagonal keys have rounded corners, and the 10 mm bounding box around each one was
+fitted to the **sharp vertices** of the hexagon instead of the **rounded edge**. The rounded edge is
+what actually gives a key its 10 mm width. As a result, the keys were narrower than 10 mm. Their
+centres ended up 9.8 mm apart horizontally and 8.5 mm vertically, instead of 10 mm and 8.66 mm.
+
+Smaller keys mean shorter distances, so the original layout was compared against QWERTY at a
+slight advantage. Its results were slightly optimistic.
+
+The **Eye Sense Keyboard** layout (`--layout eye-sense-keyboard`, now the default) uses the correct
+geometry: every key is a true 10 mm wide, the same as a QWERTY key. It also rearranges the letters.
+On the full *Don Quijote* at 15 KPM:
+
+| Layout | Distance | Less movement than QWERTY | Estimated KPM |
+| --- | --- | --- | --- |
+| Eye Sense (original, error included) | 13.320 km | 53.1 % | 32.0 |
+| Eye Sense, same letters on the corrected grid | 13.584 km | 52.2 % | 31.4 |
+| **Eye Sense Keyboard** (corrected) | **14.337 km** | **49.5 %** | **29.7** |
+
+The error alone accounts for about one percentage point (53.1 % → 52.2 %). The rest of the
+difference comes from the new letter arrangement. The original layout is kept for reference and to
+reproduce earlier results.
+
+> **Work in progress:** the letter positions in Eye Sense Keyboard are not final. As was done with
+> the original layout, the arrangement will be iterated on to improve these results. Expect the
+> figures above to change.
 
 ## Quick start
 
@@ -73,7 +102,8 @@ Create a **Run/Debug configuration** of type *Python*:
 | --- | --- | --- |
 | `TEXT_FILE` | — | UTF-8 text to analyse |
 | `--kpm` | `15` | User's current **keystrokes per minute** on QWERTY (15 KPM = 4 s per key) |
-| `--eye-scale` | `1.0` | Size multiplier of the Eye Sense prototype (`1.5` = keys 50 % larger) |
+| `--layout` | `eye-sense-keyboard` | Layout to compare against QWERTY: `eye-sense-keyboard` or `eye-sense` |
+| `--eye-scale` | `1.0` | Size multiplier of the compared layout (`1.5` = keys 50 % larger) |
 | `--qwerty-scale` | `1.0` | Size multiplier of the QWERTY keyboard |
 
 It can also be used as a library:
@@ -142,6 +172,9 @@ from letter_metter import Layout
 MY_LAYOUT = Layout("My layout", {"a": (5, 5), "b": (15, 5), ...})
 ```
 
+To make it selectable with `--layout`, register it in `LAYOUTS` (in `layouts.py`) under a
+command-line name, e.g. `"my-layout": MY_LAYOUT`.
+
 Both layouts in a comparison must contain the same letters.
 
 <details>
@@ -158,7 +191,7 @@ Rows are staggered by 0, 3 and 8 mm, as on a physical keyboard.
 </details>
 
 <details>
-<summary><b>Eye Sense coordinates</b></summary>
+<summary><b>Eye Sense (original) coordinates</b>, including the key-width error described in the <a href="#erratum-key-width-in-the-original-eye-sense-layout">erratum</a></summary>
 
 | Row | Keys (x, y in mm) |
 | --- | --- |

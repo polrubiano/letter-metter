@@ -38,9 +38,25 @@ class Layout:
         return self.keys[char]
 
 
-# Hexagonal Eye Sense layout. The hexagons nest into each other, so key centres
-# are 9.8 mm apart horizontally and 8.5 mm vertically even though every key keeps
-# a 10 x 10 mm bounding box.
+# Hexagonal Eye Sense Keyboard layout (Compose rewrite, Spanish preset).
+# Space (two merged hexagons at the right-hand end of the bottom row)
+# is not a letter, so it isn't listed.
+EYE_SENSE_KEYBOARD = Layout(
+    name="Eye Sense Keyboard",
+    keys={
+        "x": (15, 5.77), "b": (25, 5.77), "g": (35, 5.77), "v": (45, 5.77), "k": (55, 5.77),
+        "ñ": (10, 14.43), "p": (20, 14.43), "n": (30, 14.43), "i": (40, 14.43), "y": (50, 14.43), "w": (60, 14.43),
+        "j": (5, 23.09), "m": (15, 23.09), "r": (25, 23.09), "e": (35, 23.09), "a": (45, 23.09), "d": (55, 23.09), "q": (65, 23.09),
+        "z": (10, 31.75), "u": (20, 31.75), "s": (30, 31.75), "o": (40, 31.75), "l": (50, 31.75), "h": (60, 31.75),
+        "f": (15, 40.41), "t": (25, 40.41), "c": (35, 40.41),
+    },
+)  # fmt: skip
+
+# Original hexagonal Eye Sense layout, kept to reproduce earlier results. Its key
+# centres are 9.8 mm apart horizontally and 8.5 mm vertically because the 10 mm box
+# was fitted to the hexagon's sharp vertices instead of its rounded edge, so the keys
+# are slightly narrower than 10 mm (see the erratum in the README). EYE_SENSE_KEYBOARD
+# uses the corrected geometry.
 EYE_SENSE = Layout(
     name="Eye Sense",
     keys={
@@ -64,3 +80,13 @@ QWERTY_ES = Layout(
         "n": (63, 25), "m": (73, 25),
     },
 )  # fmt: skip
+
+# Layouts that can be compared against the QWERTY baseline from the CLI (``--layout``).
+# Keys are the command-line names; add new layouts here to make them selectable.
+LAYOUTS: Mapping[str, Layout] = MappingProxyType(
+    {
+        "eye-sense": EYE_SENSE,
+        "eye-sense-keyboard": EYE_SENSE_KEYBOARD,
+    }
+)
+DEFAULT_LAYOUT = "eye-sense-keyboard"
